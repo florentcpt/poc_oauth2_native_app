@@ -1,0 +1,9 @@
+{
+    "python.pythonPath": "/Users/florent/.local/share/virtualenvs/poc_oauth2_native_app-VIPj5jwb/bin/python",
+    "python.unitTest.pyTestArgs": [
+        "."
+    ],
+    "python.unitTest.unittestEnabled": false,
+    "python.unitTest.nosetestsEnabled": false,
+    "python.unitTest.pyTestEnabled": true
+}
