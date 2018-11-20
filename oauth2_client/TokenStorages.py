@@ -1,33 +1,21 @@
 import json
 import time
 
-from .types import TokenType
-
 
 class TokenResponse(object):
-    """
-    >>> payload = '''{
-    ...   "access_token": "foo_access_token",
-    ...   "expires_in": 3600,
-    ...   "refresh_token": "foo_refresh_token",
-    ...   "scope": "profile email",
-    ...   "token_type": "Bearer",
-    ...   "id_token": "foo_id_token"
-    ... }'''
-    >>> tr = TokenResponse().set_from_json(payload)
-    >>> tr.access_token
-    'foo_access_token'
-    """
 
-    def __init__(self):
-        self.access_token = ''
-        self.expires_in = 0
-        self.refresh_token = ''
-        self.scope = ''
-        self.token_type = ''
-        self.id_token = ''
+    def __init__(self, access_token='', expires_in=0, refresh_token='', scope='', token_type='', id_token=''):
+        self.save(access_token, expires_in, refresh_token, scope, token_type, id_token)
+    
+    def save(self, access_token, expires_in, refresh_token, scope, token_type, id_token):
+        self.access_token = access_token
+        self.expires_in = expires_in
+        self.refresh_token = refresh_token
+        self.scope = scope
+        self.token_type = token_type
+        self.id_token = id_token
 
-        self._creation_time = None
+        self._creation_time = time.time()
     
     @property
     def expiry_time(self):
@@ -40,14 +28,23 @@ class TokenResponse(object):
         """
         return self.scope.split(' ')
     
-    def set_from_json(self, payload):
+    @classmethod
+    def from_json_response(cls, payload):
+        """
+        >>> payload = '''{
+        ...   "access_token": "foo_access_token",
+        ...   "expires_in": 3600,
+        ...   "refresh_token": "foo_refresh_token",
+        ...   "scope": "profile email",
+        ...   "token_type": "Bearer",
+        ...   "id_token": "foo_id_token"
+        ... }'''
+        >>> tr = TokenResponse.from_json_response(payload)
+        >>> tr.access_token
+        'foo_access_token'
+        """
         payload = json.loads(payload)
-        self._creation_time = time.time()
-        for (k, v) in payload.items():
-            if not hasattr(self, k):
-                raise KeyError('%s is not a valid attribute for a token response' % k)
-            setattr(self, k, v)
-        return self
+        return cls(**payload)
     
     def remaining_validity(self):
         return self.expiry_time - time.time()
@@ -85,8 +82,7 @@ class BasicTokenStorage(BaseTokenStorage):
     Really basic storage only using current execution memory.
     This SHOULD NOT be used in production.
 
-    >>> token = TokenResponse()
-    >>> token.access_token = 'foo'
+    >>> token = TokenResponse(access_token='foo')
     >>> store = BasicTokenStorage()
     >>> store.set_token('https://domain.example.com/authz', token)
     >>> token == store.get_token('https://domain.example.com/authz')
