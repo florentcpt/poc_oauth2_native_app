@@ -30,7 +30,17 @@ class BaseAuthServer(object):
 
 
 class OAuth2AuthServer(BaseAuthServer):
-    def __init__(self, authorization_endpoint, token_endpoint):
+    def __init__(self, authorization_endpoint, token_endpoint, *args, **kwargs):
+        super(OAuth2AuthServer, self).__init__(*args, **kwargs)
+
         # Properties from base RFC 6749
         self.authorization_endpoint = authorization_endpoint
         self.token_endpoint = token_endpoint
+
+
+class OIDCAuthServer(OAuth2AuthServer):
+    def __init__(self, authorization_endpoint, token_endpoint, userinfo_endpoint, *args, **kwargs):
+        super(OIDCAuthServer, self).__init__(authorization_endpoint, token_endpoint, *args, **kwargs)
+
+        # Properties from base OIDC Core
+        self.userinfo_endpoint = userinfo_endpoint
