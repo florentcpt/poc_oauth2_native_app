@@ -1,7 +1,15 @@
 import inspect
-from urllib.parse import urlencode, urlsplit, parse_qs
-from urllib.request import urlopen
-from http.server import SimpleHTTPRequestHandler, HTTPServer
+try:
+    from urllib.parse import urlencode, urlsplit, parse_qs
+    from urllib.request import urlopen
+except ImportError:
+    from urllib import urlencode, urlopen
+    from urlparse import urlsplit, parse_qs
+try:
+    from http.server import SimpleHTTPRequestHandler, HTTPServer
+except ImportError:
+    from BaseHTTPServer import HTTPServer
+    from SimpleHTTPServer import SimpleHTTPRequestHandler
 import logging
 import os
 import multiprocessing

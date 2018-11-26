@@ -1,3 +1,7 @@
+try:
+    from urllib.parse import urlsplit, parse_qs
+except ImportError:
+    from urlparse import urlsplit, parse_qs
 import collections
 import pytest
 
@@ -38,4 +42,13 @@ class TestNativeAppAuth():
 
     def test_authz_url(self, native_app_auth):
         assert native_app_auth.redirect_uri == 'http://127.0.0.1:8080/oauth2_redirect.html'
-        assert native_app_auth.authz_url == 'https://as.example.com/oauth2/auth?client_id=clientid&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Foauth2_redirect.html&response_type=code&scope=email+profile'
+        authz_url = urlsplit(native_app_auth.authz_url)
+        assert authz_url.netloc == 'as.example.com'
+        assert authz_url.path == '/oauth2/auth'
+        authz_url_qs = parse_qs(authz_url.query)
+        assert authz_url_qs == {
+            'client_id': ['clientid'],
+            'redirect_uri': ['http://127.0.0.1:8080/oauth2_redirect.html'],
+            'response_type': ['code'],
+            'scope': ['email profile'],
+        }

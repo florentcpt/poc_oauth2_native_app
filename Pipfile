@@ -9,6 +9,7 @@ requests = "*"
 [dev-packages]
 pylint = "*"
 pytest = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3"

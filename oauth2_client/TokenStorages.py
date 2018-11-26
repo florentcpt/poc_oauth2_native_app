@@ -1,3 +1,8 @@
+# coding: utf-8
+"""Token storages models"""
+
+__author__ = 'Florent Captier <florent@captier.org>'
+
 import json
 import time
 
