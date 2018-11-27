@@ -2,8 +2,8 @@ import configparser
 import json
 import logging
 import requests
-from oauth2_client.requests.AuthClasses import NativeAppAuth
 import oauth2_client
+from oauth2_client.views.requests import NativeAppAuth
 
 
 def main():

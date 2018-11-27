@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, absolute_import
 import inspect
 try:
     from urllib.parse import urlencode, urlsplit, parse_qs
@@ -15,8 +16,8 @@ import os
 import multiprocessing
 import webbrowser
 import requests
-from ..TokenStorages import BasicTokenStorage, BaseTokenStorage, TokenResponse
-from ..servers import BaseAuthServer
+from ...models.tokenStorages import BasicTokenStorage, BaseTokenStorage, TokenResponse
+from ...models.servers import BaseAuthServer
 
 __logger__ = logging.getLogger(__name__)
 

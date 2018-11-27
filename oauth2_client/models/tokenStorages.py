@@ -1,10 +1,11 @@
 # coding: utf-8
 """Token storages models"""
 
-__author__ = 'Florent Captier <florent@captier.org>'
-
+from __future__ import unicode_literals, absolute_import
 import json
 import time
+
+__author__ = 'Florent Captier <florent@captier.org>'
 
 
 class TokenResponse(object):

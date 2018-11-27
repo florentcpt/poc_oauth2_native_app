@@ -14,7 +14,7 @@ setup(
     author='Florent Captier',
     author_email='florent@captier.org',
     description='',
-    tests_require=['tox', 'pytest'],
+    tests_require=['pytest'],
     setup_requires=['setuptools_scm'],
     platforms=['any'],
     classifiers=[
@@ -23,8 +23,7 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries",
-        "Topic :: Home Automation",
         "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3",
     ]
 )
